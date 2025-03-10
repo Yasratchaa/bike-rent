@@ -22,6 +22,5 @@ streamlit run dashboard.py
 ```
 
 ## Run my streamlit app
-```
 https://harishrahmatullah-bike-rent.streamlit.app/
-```
+
