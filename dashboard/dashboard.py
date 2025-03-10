@@ -4,7 +4,7 @@ import streamlit as st
 
 # Load data
 def load_data():
-    df = pd.read_csv('all_data.csv')
+    df = pd.read_csv('dashboard/all_data.csv')
     # Mengubah nilai season menjadi nama musim
     season_mapping = {1: 'Musim Semi', 2: 'Musim Panas', 3: 'Musim Gugur', 4: 'Musim Dingin'}
     df['season'] = df['season'].map(season_mapping)
