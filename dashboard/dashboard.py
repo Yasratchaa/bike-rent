@@ -79,11 +79,10 @@ fig_day = px.box(
 )
 st.plotly_chart(fig_day)
 
-# Pengaruh Kondisi Cuaca terhadap Penyewaan Sepeda
-fig_weather = px.bar(
+# Pengaruh Kondisi Cuaca terhadap Penyewaan Sepeda (Pie Chart)
+fig_weather = px.pie(
     filtered_df.groupby("weathersit")['cnt'].sum().reset_index(),
-    x="weathersit", y="cnt", color="weathersit",
-    title="Pengaruh Kondisi Cuaca terhadap Penyewaan Sepeda",
-    labels={"cnt": "Jumlah Penyewaan", "weathersit": "Kondisi Cuaca"}
+    names="weathersit", values="cnt",
+    title="Pengaruh Kondisi Cuaca terhadap Penyewaan Sepeda"
 )
 st.plotly_chart(fig_weather)
