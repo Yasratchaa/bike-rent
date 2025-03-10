@@ -24,10 +24,10 @@ if not required_columns.issubset(all_df.columns):
 
 # Sidebar Filters
 st.sidebar.header("Filter Data")
-season = st.sidebar.multiselect("Pilih Musim:", all_df["season"].unique(), default=[])
-time_filter = st.sidebar.multiselect("Pilih Jam:", all_df["hr"].unique(), default=[])
-weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", all_df["weathersit"].unique(), default=[])
-workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=[])
+season = st.sidebar.multiselect("Pilih Musim:", all_df["season"].unique(), default=all_df["season"].unique()[:2])
+time_filter = st.sidebar.multiselect("Pilih Jam:", all_df["hr"].unique(), default=all_df["hr"].unique()[:2])
+weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", all_df["weathersit"].unique(), default=all_df["weathersit"].unique()[:2])
+workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin', 'Selasa'])
 
 # Apply Filters
 filtered_df = all_df[
