@@ -27,7 +27,7 @@ st.sidebar.header("Filter Data")
 season = st.sidebar.multiselect("Pilih Musim:", all_df["season"].unique(), default=all_df["season"].unique())
 time_filter = st.sidebar.multiselect("Pilih Jam:", all_df["hr"].unique(), default=all_df["hr"].unique())
 weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", all_df["weathersit"].unique(), default=all_df["weathersit"].unique())
-workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'])
+workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin'])
 
 # Apply Filters
 filtered_df = all_df[
@@ -44,7 +44,10 @@ if workingday_filter:
 
 # Tampilkan Data
 st.title("Dashboard Bike Sharing")
-st.write(f"Menampilkan data untuk musim {season} dan jam {time_filter}")
+st.write(f"Menampilkan data untuk musim {season}")
+st.write(f"Menampilkan data untuk jam {time_filter}")
+st.write(f"Menampilkan data untuk cuaca {weather_filter}")
+st.write(f"Menampilkan data untuk hari {workingday_filter}")
 st.dataframe(filtered_df)
 
 # Perbandingan Penggunaan Layanan Berdasarkan Musim
