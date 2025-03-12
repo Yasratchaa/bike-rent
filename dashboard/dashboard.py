@@ -25,7 +25,7 @@ st.sidebar.header("Pilih data yang ingin ditampilkan")
 season = st.sidebar.multiselect("Pilih Musim:", main_df["season"].unique(), default=main_df["season"].unique()[:2])
 time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=main_df["hr"].unique())
 weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", main_df["weathersit"].unique(), default=main_df["weathersit"].unique()[:2])
-workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin', 'Selasa'])
+day_filter = st.sidebar.multiselect("Pilih Hari:", ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'], default=['Minggu', 'Senin'])
 
 
 # Apply Filters
@@ -35,18 +35,10 @@ filtered_df = main_df[
     (main_df["weathersit"].isin(weather_filter))
 ]
 
-if workingday_filter:
-    if any(day in ['Sabtu', 'Minggu'] for day in workingday_filter):
-        weekend_data = filtered_df[filtered_df["workingday"] == 0]
-    else:
-        weekend_data = pd.DataFrame(columns=filtered_df.columns)  # Data kosong untuk akhir pekan
-
-    if any(day in ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] for day in workingday_filter):
-        weekday_data = filtered_df[filtered_df["workingday"] == 1]
-    else:
-        weekday_data = pd.DataFrame(columns=filtered_df.columns)  # Data kosong untuk hari kerja
-
-    filtered_df = pd.concat([weekday_data, weekend_data])
+if day_filter:
+    day_mapping = {"Minggu": 0, "Senin": 1, "Selasa": 2, "Rabu": 3, "Kamis": 4, "Jumat": 5, "Sabtu": 6}
+    day_numbers = [day_mapping[day] for day in day_filter]
+    filtered_df = filtered_df[filtered_df["weekday"].isin(day_numbers)]
 
 
 # Tampilkan Data
@@ -54,7 +46,7 @@ st.title("Dashboard Bike Sharing")
 st.write(f"Menampilkan data untuk musim {season}")
 st.write(f"Menampilkan data untuk jam {time_filter}")
 st.write(f"Menampilkan data untuk cuaca {weather_filter}")
-st.write(f"Menampilkan data untuk hari {workingday_filter}")
+st.write(f"Menampilkan data untuk hari {day_filter}")
 st.dataframe(filtered_df)
 
 
