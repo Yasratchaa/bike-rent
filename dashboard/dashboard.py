@@ -27,6 +27,7 @@ time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), defau
 weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", main_df["weathersit"].unique(), default=main_df["weathersit"].unique()[:2])
 workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin', 'Selasa'])
 
+
 # Apply Filters
 filtered_df = main_df[
     (main_df["season"].isin(season)) &
@@ -35,10 +36,18 @@ filtered_df = main_df[
 ]
 
 if workingday_filter:
-    if 'Sabtu' in workingday_filter or 'Minggu' in workingday_filter:
-        filtered_df = filtered_df[filtered_df["workingday"] == 0]
+    if any(day in ['Sabtu', 'Minggu'] for day in workingday_filter):
+        weekend_data = filtered_df[filtered_df["workingday"] == 0]
     else:
-        filtered_df = filtered_df[filtered_df["workingday"] == 1]
+        weekend_data = pd.DataFrame(columns=filtered_df.columns)  # Data kosong untuk akhir pekan
+
+    if any(day in ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] for day in workingday_filter):
+        weekday_data = filtered_df[filtered_df["workingday"] == 1]
+    else:
+        weekday_data = pd.DataFrame(columns=filtered_df.columns)  # Data kosong untuk hari kerja
+
+    filtered_df = pd.concat([weekday_data, weekend_data])
+
 
 # Tampilkan Data
 st.title("Dashboard Bike Sharing")
@@ -47,6 +56,7 @@ st.write(f"Menampilkan data untuk jam {time_filter}")
 st.write(f"Menampilkan data untuk cuaca {weather_filter}")
 st.write(f"Menampilkan data untuk hari {workingday_filter}")
 st.dataframe(filtered_df)
+
 
 # Perbandingan Penggunaan Layanan Berdasarkan Musim
 fig_season = px.bar(
@@ -57,6 +67,7 @@ fig_season = px.bar(
 )
 st.plotly_chart(fig_season)
 
+
 # Perbandingan Penyewaan Sepeda Berdasarkan Jam
 fig_time = px.line(
     filtered_df.groupby("hr")["cnt"].mean().reset_index(),
@@ -65,6 +76,7 @@ fig_time = px.line(
     labels={"cnt": "Rata-rata Penyewaan", "hr": "Jam"}
 )
 st.plotly_chart(fig_time)
+
 
 # Perbandingan Penyewaan Sepeda Berdasarkan Hari
 fig_day = px.box(
@@ -76,6 +88,7 @@ fig_day = px.box(
     labels={"cnt": "Jumlah Penyewaan", "workingday": "Hari Kerja (0=Akhir Pekan, 1=Hari Kerja)"}
 )
 st.plotly_chart(fig_day)
+
 
 # Pengaruh Kondisi Cuaca terhadap Penyewaan Sepeda (Pie Chart)
 fig_weather = px.pie(
