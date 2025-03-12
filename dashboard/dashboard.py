@@ -4,7 +4,7 @@ import streamlit as st
 
 # Load data
 def load_data():
-    df = pd.read_csv('dashboard/all_data.csv')
+    df = pd.read_csv('dashboard/main_data.csv')
     # Mengubah nilai season menjadi nama musim
     season_mapping = {1: 'Musim Semi', 2: 'Musim Panas', 3: 'Musim Gugur', 4: 'Musim Dingin'}
     df['season'] = df['season'].map(season_mapping)
@@ -13,27 +13,25 @@ def load_data():
     df['weathersit'] = df['weathersit'].map(weather_mapping)
     return df
 
-all_df = load_data()
+main_df = load_data()
 
 
 # Pastikan dataset memiliki kolom yang diperlukan
 required_columns = {"season", "hr", "weathersit", "holiday", "workingday", "casual", "registered", "cnt"}
-if not required_columns.issubset(all_df.columns):
-    st.error("Dataset tidak memiliki semua kolom yang diperlukan. Periksa CSV Anda.")
-    st.stop()
+
 
 # Sidebar Filters
-st.sidebar.header("Filter Data")
-season = st.sidebar.multiselect("Pilih Musim:", all_df["season"].unique(), default=all_df["season"].unique()[:2])
-time_filter = st.sidebar.multiselect("Pilih Jam:", all_df["hr"].unique(), default=all_df["hr"].unique())
-weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", all_df["weathersit"].unique(), default=all_df["weathersit"].unique()[:2])
+st.sidebar.header("Pilih data yang ingin ditampilkan")
+season = st.sidebar.multiselect("Pilih Musim:", main_df["season"].unique(), default=main_df["season"].unique()[:2])
+time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=main_df["hr"].unique())
+weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", main_df["weathersit"].unique(), default=main_df["weathersit"].unique()[:2])
 workingday_filter = st.sidebar.multiselect("Pilih Hari:", ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'], default=['Senin', 'Selasa'])
 
 # Apply Filters
-filtered_df = all_df[
-    (all_df["season"].isin(season)) &
-    (all_df["hr"].isin(time_filter)) &
-    (all_df["weathersit"].isin(weather_filter))
+filtered_df = main_df[
+    (main_df["season"].isin(season)) &
+    (main_df["hr"].isin(time_filter)) &
+    (main_df["weathersit"].isin(weather_filter))
 ]
 
 if workingday_filter:
@@ -70,7 +68,7 @@ st.plotly_chart(fig_time)
 
 # Perbandingan Penyewaan Sepeda Berdasarkan Hari
 fig_day = px.box(
-    all_df, 
+    main_df, 
     x="workingday", 
     y="cnt", 
     color="workingday",
