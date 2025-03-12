@@ -43,10 +43,10 @@ if day_filter:
 
 # Tampilkan Data
 st.title("Bike Sharing Dashboard")
-st.write(f"Menampilkan data untuk musim {season}")
-st.write(f"Menampilkan data untuk jam {time_filter}")
-st.write(f"Menampilkan data untuk cuaca {weather_filter}")
-st.write(f"Menampilkan data untuk hari {day_filter}")
+st.write(f"Data ditampilkan berdasarkan musim {season}")
+st.write(f"Data ditampilkan berdasarkan cuaca {weather_filter}")
+st.write(f"Data ditampilkan berdasarkan hari {day_filter}")
+st.write(f"Data ditampilkan berdasarkan jam {time_filter}")
 st.dataframe(filtered_df)
 
 
