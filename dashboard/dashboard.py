@@ -23,9 +23,9 @@ required_columns = {"season", "hr", "weathersit", "holiday", "workingday", "casu
 # Sidebar Filters
 st.sidebar.header("Pilih data yang ingin ditampilkan")
 season = st.sidebar.multiselect("Pilih Musim:", main_df["season"].unique(), default=main_df["season"].unique()[:2])
-time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=main_df["hr"].unique())
 weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", main_df["weathersit"].unique(), default=main_df["weathersit"].unique()[:2])
 day_filter = st.sidebar.multiselect("Pilih Hari:", ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'], default=['Minggu', 'Senin'])
+time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=main_df["hr"].unique())
 
 
 # Apply Filters
@@ -42,7 +42,7 @@ if day_filter:
 
 
 # Tampilkan Data
-st.title("Dashboard Bike Sharing")
+st.title("Bike Sharing Dashboard")
 st.write(f"Menampilkan data untuk musim {season}")
 st.write(f"Menampilkan data untuk jam {time_filter}")
 st.write(f"Menampilkan data untuk cuaca {weather_filter}")
