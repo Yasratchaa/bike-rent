@@ -25,7 +25,7 @@ st.sidebar.header("Pilih data yang ingin ditampilkan")
 season = st.sidebar.multiselect("Pilih Musim:", main_df["season"].unique(), default=main_df["season"].unique()[:2])
 weather_filter = st.sidebar.multiselect("Pilih Kondisi Cuaca:", main_df["weathersit"].unique(), default=main_df["weathersit"].unique()[:2])
 day_filter = st.sidebar.multiselect("Pilih Hari:", ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'], default=['Minggu', 'Senin'])
-time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=main_df["hr"].unique())
+time_filter = st.sidebar.multiselect("Pilih Jam:", main_df["hr"].unique(), default=list(range(7, 20)))
 
 
 # Apply Filters
