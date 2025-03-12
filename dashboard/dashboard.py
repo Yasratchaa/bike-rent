@@ -73,9 +73,9 @@ st.plotly_chart(fig_time)
 # Perbandingan Penyewaan Sepeda Berdasarkan Hari
 fig_day = px.box(
     filtered_df,
-    x="weekday",
+    x=filtered_df["weekday"].map({0: "Minggu", 1: "Senin", 2: "Selasa", 3: "Rabu", 4: "Kamis", 5: "Jumat", 6: "Sabtu"}),
     y="cnt",
-    color="weekday",
+    color=filtered_df["weekday"].map({0: "Minggu", 1: "Senin", 2: "Selasa", 3: "Rabu", 4: "Kamis", 5: "Jumat", 6: "Sabtu"}),
     title="Perbandingan Penyewaan Sepeda Berdasarkan Hari",
     labels={"cnt": "Jumlah Penyewaan", "weekday": "Hari"}
 )
