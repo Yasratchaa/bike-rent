@@ -17,10 +17,12 @@ pip install -r requirements.txt
 ```
 
 ## Run streamlit app
+Sebelum menjalankan aplikasi Streamlit, pastikan Anda berada di folder `dashboard`. Gunakan perintah berikut:
 ```
+cd dashboard
 streamlit run dashboard.py
 ```
 
 ## Run my streamlit app
-https://harishrahmatullah-bike-rent.streamlit.app/
+[https://harishrahmatullah-bike-rent.streamlit.app/](https://harishrahmatullah-bike-rent.streamlit.app/)
 
